@@ -1,0 +1,10 @@
+// Contient les informations pour compiler le projet
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "watch": true
+    },
+    "files": [
+        "./src/app.ts"
+    ]
+}
