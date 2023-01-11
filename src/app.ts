@@ -1,5 +1,8 @@
 let i: number = 0;
 const students: string[] = [ "Abel", "Cedric", "Gloire" ];
+const cbTest: Function = () => {
+    console.log("Type function")
+}
 const cb: (e: MouseEvent) => void = function (e) { }
 function printId(id: number | string): void {
     console.log(id.toString())

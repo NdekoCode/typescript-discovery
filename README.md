@@ -85,3 +85,62 @@ Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler 
     ]
 }
 ```
+
+## Syntaxe de base
+
+Dans la syntaxe de base on va voir beaucoup plus sur les types de variable et comment les utiliser ainsi que les différentes variations.
+
+### Type de variable
+
+Pour déclarer les types de variables il suffit d'utiliser un deux point ":" devant le nom de la variable suivi du type que l'on souhaite utiliser  et puis on egalise de sa valeur initial si on veut
+
+```{TS}
+const greet:string = "Hello world";
+const nbrZero:number = 0;
+const isBooleanVal:boolean = false;
+const nullVal:null = null;
+const anArrayOfString:string[] = ['lol','Bum'];
+const allTypesYouWant: any = [ "Abel", { user: { username: "Lolo" } }, "Gloire", 3, false ];
+```
+
+⚠ Le type `any` ça permet de dire n'importe quoi, c'est un type un petit peu fourtout et c'est un type que l'on evitera au maximum d'utiliser, `any` vous pouvez le mettre n'importe où mais c'est un type qui est un peu trop gros car quand vous utilisez cela veut dire que vous ne connaissez pas la forme de cette variable et que tout au long de l'execution vous n'avez aucune idée de ce qu'il y a dedans donc ce n'est pas très très pratique.
+
+Sachez que vous pouvez aussi preciser la forme des objets en utilisant une syntaxe ressemblant un peu à une syntaxe objet et pour cela on créer une variable encore et puis un deux point ":" devant son nom suivis d'un objet qui va decrire l'objet en question et cela se fait en mettant sur chaque clé d'un objet on lui met deux point son type.
+
+```{TS}
+
+const user:{username:string,firstname:string,lastname:string} = {username:'',firstname:"",lastname:''};
+// Si votre objet a une infinité de clé vous pouvez aussi le decrire comme suit
+const user:{username:string,firstname:string,lastname:string,[key:string]:string} = {username:'',firstname:"",lastname:''};
+
+```
+
+Pour des objets qui correspondent à des types spécifiques vous pouvez simplement mettre le nom de l'objet:
+
+```{TS}
+const date:Date = new Date()
+
+```
+
+### Typage des fonctions
+
+Le typage des fonctions c'est comme pour les variable, c'est à dire le nom de la fonction puis son type qui est `Function` avec:
+
+```{TS}
+const cb:Function = ()=>{
+    
+}
+// Pour les paramètres des fonctions c'est le meme principe que pour le type de variable
+const cbTest:Function = (e:MouseEvent)=>{
+}
+function printId(id:number):void {
+
+}
+// J'attends une fonction qui prend en paramètre un element de type MouseEvent et qui ne retourne rien
+const whenUserClick:(e:MouseEvent)=>void = (e)=>{
+
+}
+
+```
+
+⚠ Quand vous utilisez le mot clé `void` cela veut dire que le retour ne sera pas utilisé, mais si vous avez une fonction void qui retourne quelque chose et que vous utilisez la valeur retourner, dans ce cas cela va générer une erreur.

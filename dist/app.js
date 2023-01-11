@@ -1,6 +1,9 @@
 "use strict";
 let i = 0;
 const students = ["Abel", "Cedric", "Gloire"];
+const cbTest = () => {
+    console.log("Type function");
+};
 const cb = function (e) { };
 function printId(id) {
     console.log(id.toString());
