@@ -1,32 +1,10 @@
 let i: number = 0;
-const students: string[] = [ "Abel", "Cedric", "Gloire" ];
-const cbTest: Function = () => {
-    console.log("Type function")
-}
-const cb: (e: MouseEvent) => void = function (e) { }
-function printId(id: number | string): void {
-    console.log(id.toString())
-}
-const user: {
-    username: string;
-    email: string;
-    password: string;
-    firstName: string;
-    [ key: string ]: string;
-} = {
-    firstName: "Arick",
-    username: "Ndekocode",
-    email: "arickbulakali@gmail.com",
-    password: "",
-};
-const compter = document.getElementById("compter") as HTMLButtonElement;
-const increment: (e: Event) => void = () => {
+const compter = <HTMLButtonElement>document.getElementById("compter");
+const increment: (e: Event) => void = (e) => {
     i++;
-    const span = <HTMLSpanElement>compter.querySelector("span");
+    const span = compter?.querySelector('span') as HTMLSpanElement;
     if (span) {
-
         span.innerText = i.toString();
     }
-};
-// N'Utilise addEventListener que si compter existe
+}
 compter?.addEventListener("click", increment);

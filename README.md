@@ -62,8 +62,8 @@ Conversion en JavaScript on a :
 
 Pour installer TypeScript il faut le faire en utilisant `npm` on a `npm install typescript --save-dev` et `pnpm` avec `pnpm add typescript -D`.
 
-Pour maintenant utiliser le TypeScript il faut utiliser des fichiers avec une extension `.ts` comme par exemple `app.ts` et à l'intérieur de ces fichiers on y écrit du code TypeScript.
-Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler en fichier JavaScript et pour cela on utilise la commande `npx tsc LeNomDuFichier-A-Compiler.ts`; et si vous voulez dans cette ligne de commande on peut utiliser pas mal d'argument pour aller encore plus loin, par exemple ajouter un watcher qui va écouter le changement sur notre fichier TypeScript et le compiler à chaque détection d'un changement avec `npx tsc LeNomDuFichier-A-Compiler.ts --watch` ou en spécifiant le dossier ou doit se faire la compilation avec `npx tsc LeNomDuFichier-A-Compiler.ts --outDir leDossierOuOnVaCompiler` et pour éviter de répéter ce drapeau, ce que l'on va faire c'est créer un fichier de configuration appeler `tsconfig.json` qui va contenir maintenant l'ensemble des règles que l'on veut respecter à la compilation, ce fichier est ecrit en format JSON et contient les regles de la forme suivante :
+Pour maintenant utiliser le TypeScript il faut utiliser des fichiers avec une extension `.ts` par exemple `app.ts` et à l'intérieur de ces fichiers on y écrit du code TypeScript.
+Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler en fichier JavaScript et pour cela on utilise la commande `npx tsc LeNomDuFichier-A-Compiler.ts`; et si vous voulez dans cette ligne de commande on peut utiliser pas mal d'argument pour aller encore plus loin, par exemple ajouter un watcher qui va écouter le changement sur notre fichier TypeScript et le compiler à chaque détection d'un changement avec `npx tsc LeNomDuFichier-A-Compiler.ts --watch` ou en spécifiant le dossier ou doit se faire la compilation avec `npx tsc LeNomDuFichier-A-Compiler.ts --outDir leDossierOuOnVaCompiler` et pour éviter de répéter ce drapeau, ce que l'on va faire c'est créer un fichier de configuration appeler `tsconfig.json` qui va contenir maintenant l'ensemble des règles que l'on veut respecter à la compilation, ce fichier est écrit en format JSON et contient les règles de la forme suivante :
 
 ```{JSON}
 // Contient les informations pour compiler le projet
@@ -92,7 +92,7 @@ Dans la syntaxe de base on va voir beaucoup plus sur les types de variable et co
 
 ### Type de variable
 
-Pour déclarer les types de variables il suffit d'utiliser un deux point ":" devant le nom de la variable suivi du type que l'on souhaite utiliser  et puis on egalise de sa valeur initial si on veut
+Pour déclarer les types de variables il suffit d'utiliser un deux point ":" devant le nom de la variable suivi du type que l'on souhaite utiliser et puis on égalise de sa valeur initiale si on veut
 
 ```{TS}
 const greet:string = "Hello world";
@@ -103,9 +103,9 @@ const anArrayOfString:string[] = ['lol','Bum'];
 const allTypesYouWant: any = [ "Abel", { user: { username: "Lolo" } }, "Gloire", 3, false ];
 ```
 
-⚠ Le type `any` ça permet de dire n'importe quoi, c'est un type un petit peu fourtout et c'est un type que l'on evitera au maximum d'utiliser, `any` vous pouvez le mettre n'importe où mais c'est un type qui est un peu trop gros car quand vous utilisez cela veut dire que vous ne connaissez pas la forme de cette variable et que tout au long de l'execution vous n'avez aucune idée de ce qu'il y a dedans donc ce n'est pas très très pratique.
+⚠ Le type `any` ça permet de dire n'importe quoi, c'est un type un petit peu fourtout et c'est un type que l'on évitera au maximum d'utiliser, `any` vous pouvez le mettre n'importe où, mais c'est un type qui est un peu trop gros, car quand vous utilisez cela veut dire que vous ne connaissez pas la forme de cette variable et que tout au long de l'exécution vous n'avez aucune idée de ce qu'il y a dedans donc ce n'est pas très pratique.
 
-Sachez que vous pouvez aussi preciser la forme des objets en utilisant une syntaxe ressemblant un peu à une syntaxe objet et pour cela on créer une variable encore et puis un deux point ":" devant son nom suivis d'un objet qui va decrire l'objet en question et cela se fait en mettant sur chaque clé d'un objet on lui met deux point son type.
+Sachez que vous pouvez aussi préciser la forme des objets en utilisant une syntaxe ressemblant un peu à une syntaxe objet et pour cela on crée une variable encore et puis un deux point ":" devant son nom suivi d'un objet qui va décrire l'objet en question et cela se fait en mettant sur chaque clé d'un objet on lui met deux point son type.
 
 ```{TS}
 
@@ -124,7 +124,7 @@ const date:Date = new Date()
 
 ### Typage des fonctions
 
-Le typage des fonctions c'est comme pour les variable, c'est à dire le nom de la fonction puis son type qui est `Function` avec:
+Le typage des fonctions, c'est comme pour les variables simples, c'est-à-dire le nom de la fonction puis son type qui est `Function` avec:
 
 ```{TS}
 const cb:Function = ()=>{
@@ -144,3 +144,23 @@ const whenUserClick:(e:MouseEvent)=>void = (e)=>{
 ```
 
 ⚠ Quand vous utilisez le mot clé `void` cela veut dire que le retour ne sera pas utilisé, mais si vous avez une fonction void qui retourne quelque chose et que vous utilisez la valeur retourner, dans ce cas cela va générer une erreur.
+
+Dans certaines situations, il ne va pas être capable de deviner le type, surtout pour les éléments du DOM et quelques spécificités. Pour remédier à cella, vous pouvez utiliser ce que l'on appelle **l'assertion de type** et c'est indiquer à TypeScript `de quel type va etre ce retour là` et pour cela on utilise deux notions, l'un en utilisant le mot clé as et l'autre en utilisant une syntaxe similaire au JSX et il respecte et vérifie cela en se basant sur le checker installer.
+
+```{TS}
+const button = document.querySelector('#compter') as HTMLButtonElement
+// ou
+const btn = <HTMLButtonElement>document.querySelector('#compter-2');
+```
+
+### Le type union ou l'union type
+
+C'est quant une variable ou le dériver d'une variable peut prendre deux types ou plusieurs types, dans ce cas-là, vous pouvez utiliser **l'union type** dans cette situation.
+L'union type est symbolisé par une barre verticale qui permet de séparer les type que l'on veut énumérer.
+Imaginons qu'on a une fonction qui attend en paramètre un nombre ou une chaine de caractère dans ce cas :
+
+```{TS}
+function printId(id: number | string) {
+
+}
+```
