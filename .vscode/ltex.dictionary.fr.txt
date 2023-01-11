@@ -1,0 +1,9 @@
+superset
+JSDoc
+ESNext
+checker
+VScode
+tsc
+Parcel
+ESBuild
+watcher
