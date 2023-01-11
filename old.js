@@ -11,4 +11,8 @@ const date:Date = new Date();
 const cb:(e:MouseEvent)=> void = (e:MouseEvent):void=>{
     console.log(e);
 }
+Union type
+function printId(id:number | string) {
+    console.log(id)
+}
  */

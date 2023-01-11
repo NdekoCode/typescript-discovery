@@ -1,0 +1,1 @@
+{"rule":"CEST_A_DIRE","sentence":"^\\QLe typage des fonctions, c'est comme pour les variables simple, c'est à dire le nom de la fonction puis son type qui est \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q avec:\\E$"}

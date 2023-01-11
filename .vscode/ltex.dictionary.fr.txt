@@ -7,3 +7,9 @@ tsc
 Parcel
 ESBuild
 watcher
+void
+fourtout
+Narrowing
+narrowing
+TypeOfObject
+is

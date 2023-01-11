@@ -62,8 +62,8 @@ Conversion en JavaScript on a :
 
 Pour installer TypeScript il faut le faire en utilisant `npm` on a `npm install typescript --save-dev` et `pnpm` avec `pnpm add typescript -D`.
 
-Pour maintenant utiliser le TypeScript il faut utiliser des fichiers avec une extension `.ts` comme par exemple `app.ts` et à l'intérieur de ces fichiers on y écrit du code TypeScript.
-Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler en fichier JavaScript et pour cela on utilise la commande `npx tsc LeNomDuFichier-A-Compiler.ts`; et si vous voulez dans cette ligne de commande on peut utiliser pas mal d'argument pour aller encore plus loin, par exemple ajouter un watcher qui va écouter le changement sur notre fichier TypeScript et le compiler à chaque détection d'un changement avec `npx tsc LeNomDuFichier-A-Compiler.ts --watch` ou en spécifiant le dossier ou doit se faire la compilation avec `npx tsc LeNomDuFichier-A-Compiler.ts --outDir leDossierOuOnVaCompiler` et pour éviter de répéter ce drapeau, ce que l'on va faire c'est créer un fichier de configuration appeler `tsconfig.json` qui va contenir maintenant l'ensemble des règles que l'on veut respecter à la compilation, ce fichier est ecrit en format JSON et contient les regles de la forme suivante :
+Pour maintenant utiliser le TypeScript il faut utiliser des fichiers avec une extension `.ts` par exemple `app.ts` et à l'intérieur de ces fichiers on y écrit du code TypeScript.
+Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler en fichier JavaScript et pour cela on utilise la commande `npx tsc LeNomDuFichier-A-Compiler.ts`; et si vous voulez dans cette ligne de commande on peut utiliser pas mal d'argument pour aller encore plus loin, par exemple ajouter un watcher qui va écouter le changement sur notre fichier TypeScript et le compiler à chaque détection d'un changement avec `npx tsc LeNomDuFichier-A-Compiler.ts --watch` ou en spécifiant le dossier ou doit se faire la compilation avec `npx tsc LeNomDuFichier-A-Compiler.ts --outDir leDossierOuOnVaCompiler` et pour éviter de répéter ce drapeau, ce que l'on va faire c'est créer un fichier de configuration appeler `tsconfig.json` qui va contenir maintenant l'ensemble des règles que l'on veut respecter à la compilation, ce fichier est écrit en format JSON et contient les règles de la forme suivante :
 
 ```{JSON}
 // Contient les informations pour compiler le projet
@@ -84,4 +84,123 @@ Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler 
         "./src/app.ts"
     ]
 }
+```
+
+## Syntaxe de base
+
+Dans la syntaxe de base on va voir beaucoup plus sur les types de variable et comment les utiliser ainsi que les différentes variations.
+
+### Type de variable
+
+Pour déclarer les types de variables il suffit d'utiliser un deux point ":" devant le nom de la variable suivi du type que l'on souhaite utiliser et puis on égalise de sa valeur initiale si on veut
+
+```{TS}
+const greet:string = "Hello world";
+const nbrZero:number = 0;
+const isBooleanVal:boolean = false;
+const nullVal:null = null;
+const anArrayOfString:string[] = ['lol','Bum'];
+const allTypesYouWant: any = [ "Abel", { user: { username: "Lolo" } }, "Gloire", 3, false ];
+```
+
+⚠ Le type `any` ça permet de dire n'importe quoi, c'est un type un petit peu fourtout et c'est un type que l'on évitera au maximum d'utiliser, `any` vous pouvez le mettre n'importe où, mais c'est un type qui est un peu trop gros, car quand vous utilisez cela veut dire que vous ne connaissez pas la forme de cette variable et que tout au long de l'exécution vous n'avez aucune idée de ce qu'il y a dedans donc ce n'est pas très pratique.
+
+Sachez que vous pouvez aussi préciser la forme des objets en utilisant une syntaxe ressemblant un peu à une syntaxe objet et pour cela on crée une variable encore et puis un deux point ":" devant son nom suivi d'un objet qui va décrire l'objet en question et cela se fait en mettant sur chaque clé d'un objet on lui met deux point son type.
+
+```{TS}
+
+const user:{username:string,firstname:string,lastname:string} = {username:'',firstname:"",lastname:''};
+// Si votre objet a une infinité de clé vous pouvez aussi le decrire comme suit
+const user:{username:string,firstname:string,lastname:string,[key:string]:string} = {username:'',firstname:"",lastname:''};
+
+```
+
+⚠ On a aussi un autre type qui est le type `never`, c'est un type qui est souvent autogéré par le narrowing et qui est là pour vous dire `"Ce type de variable n'existera jamais que vous avez obtenus"` ou vous dire que `"la condition que vous avez ne va jamais se resoudre et n'a pas de sens"`.
+Pour des objets qui correspondent à des types spécifiques vous pouvez simplement mettre le nom de l'objet:
+
+```{TS}
+const date:Date = new Date()
+
+```
+
+### Typage des fonctions
+
+Le typage des fonctions, c'est comme pour les variables simples, c'est-à-dire le nom de la fonction puis son type qui est `Function` avec:
+
+```{TS}
+const cb:Function = ()=>{
+    
+}
+// Pour les paramètres des fonctions c'est le meme principe que pour le type de variable
+const cbTest:Function = (e:MouseEvent)=>{
+}
+function printId(id:number):void {
+
+}
+// J'attends une fonction qui prend en paramètre un element de type MouseEvent et qui ne retourne rien
+const whenUserClick:(e:MouseEvent)=>void = (e)=>{
+
+}
+
+```
+
+⚠ Quand vous utilisez le mot clé `void` cela veut dire que le retour ne sera pas utilisé, mais si vous avez une fonction void qui retourne quelque chose et que vous utilisez la valeur retourner, dans ce cas cela va générer une erreur.
+
+Dans certaines situations, il ne va pas être capable de deviner le type, surtout pour les éléments du DOM et quelques spécificités. Pour remédier à cella, vous pouvez utiliser ce que l'on appelle **l'assertion de type** et c'est indiquer à TypeScript `de quel type va etre ce retour là` et pour cela on utilise deux notions, l'un en utilisant le mot clé as et l'autre en utilisant une syntaxe similaire au JSX et il respecte et vérifie cela en se basant sur le checker installer.
+
+```{TS}
+const button = document.querySelector('#compter') as HTMLButtonElement
+// ou
+const btn = <HTMLButtonElement>document.querySelector('#compter-2');
+```
+
+### Le type union ou l'union type
+
+C'est quant une variable ou le dériver d'une variable peut prendre deux types ou plusieurs types, dans ce cas-là, vous pouvez utiliser **l'union type** dans cette situation.
+L'union type est symbolisé par une barre verticale qui permet de séparer les type que l'on veut énumérer.
+Imaginons qu'on a une fonction qui attend en paramètre un nombre ou une chaine de caractère dans ce cas :
+
+```{TS}
+function printId(id: number | string) {
+
+}
+```
+
+### Narrowing
+
+Le Narrowing c'est un système qui permet à TypeScript d'éliminer des cas et de réduire les types possibles pour vos variables.
+On peut avoir du narrowing grâce aux **`condition`**, au mot clé **`typeof`** et mot clé **`instanceof`**
+
+```{TS}
+function printId(id: string | number) {
+    if (typeof id === "number") {
+        console.log((id * 3).toString());
+    } else {
+        console.log(id.toUpperCase());
+    }
+}
+```
+
+Il permet aussi de détecter le type d'une manière automatique au fur et à mesure de l'exécution du code TypeScript surtout quand on ne sait pas d'avance que sera le type d'une variable qui est composé de plusieurs type, le narrowing nous permet de diminuer les possibilités.
+Grace aux narrowing on peut utiliser de notation comme "is TypeOfObject" comme :
+
+```{TS}
+
+function isDate(a: any): a is Date {
+    return a instanceof Date;
+}
+function example(a: Date | HTMLInputElement) {
+    if (isDate(a)) {
+        return a.getTime();
+    }
+}
+```
+
+Le principe du narrowing est très utile, c'est lorsque vous avez quelque chose qui peut avoir plusieurs via des **`condition`**, au mot clé **`typeof`** et mot clé **`instanceof`** vous pouvez réduire le type pour être sure du type dans une condition et cela vous permet de faire votre script convenable et des fois d'éliminer la valeur `null`.
+
+Pour faire du narrowing de force on utilise le point d'exclamation à la fin de la déclaration du valeur d'une variable ou une assertion de type avec le mot clé `as`, et cela, pour dire que `Le contenu de cette variable ne peut etre null`, mais pour cela il faut être à 100% sûre que cet élément existe dans la page, car vous empêcher une vérification que TypeScript a faite, mais on préfèrera utiliser le narrowing basé sur les conditions car au moins ça permet au code de gérer les cas où les formats qui est reçus en paramètre ne correspond pas à ce que l'on attend.
+
+```{TS}
+const button = document.querySelector('#compter')!
+const btn = document.querySelector('#compter') as HTMLButtonElement
 ```

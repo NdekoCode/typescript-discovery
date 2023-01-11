@@ -1,23 +1,27 @@
 "use strict";
 let i = 0;
-const students = ["Abel", "Cedric", "Gloire"];
-const cb = function (e) { };
-function printId(id) {
-    console.log(id.toString());
-}
-const user = {
-    firstName: "Arick",
-    username: "Ndekocode",
-    email: "arickbulakali@gmail.com",
-    password: "",
-};
-const compter = document.getElementById("compter");
-const increment = () => {
+const compter = document.querySelector('#compter');
+const increment = (e) => {
     i++;
-    const span = compter.querySelector("span");
+    const span = compter === null || compter === void 0 ? void 0 : compter.querySelector('span');
     if (span) {
         span.innerText = i.toString();
     }
 };
-// N'Utilise addEventListener que si compter existe
+function printId(id) {
+    if (typeof id === "number") {
+        console.log((id * 3).toString());
+    }
+    else {
+        console.log(id.toUpperCase());
+    }
+}
+function isDate(a) {
+    return a instanceof Date;
+}
+function example(a) {
+    if (isDate(a)) {
+        return a.getTime();
+    }
+}
 compter === null || compter === void 0 ? void 0 : compter.addEventListener("click", increment);

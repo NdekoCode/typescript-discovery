@@ -1,29 +1,25 @@
 let i: number = 0;
-const students: string[] = [ "Abel", "Cedric", "Gloire" ];
-const cb: (e: MouseEvent) => void = function (e) { }
-function printId(id: number | string): void {
-    console.log(id.toString())
-}
-const user: {
-    username: string;
-    email: string;
-    password: string;
-    firstName: string;
-    [ key: string ]: string;
-} = {
-    firstName: "Arick",
-    username: "Ndekocode",
-    email: "arickbulakali@gmail.com",
-    password: "",
-};
-const compter = document.getElementById("compter") as HTMLButtonElement;
-const increment: (e: Event) => void = () => {
+const compter = <HTMLButtonElement>document.querySelector('#compter')!
+const increment: (e: Event) => void = (e) => {
     i++;
-    const span = <HTMLSpanElement>compter.querySelector("span");
+    const span = compter?.querySelector('span') as HTMLSpanElement;
     if (span) {
-
         span.innerText = i.toString();
     }
-};
-// N'Utilise addEventListener que si compter existe
+}
+function printId(id: string | number) {
+    if (typeof id === "number") {
+        console.log((id * 3).toString());
+    } else {
+        console.log(id.toUpperCase());
+    }
+}
+function isDate(a: any): a is Date {
+    return a instanceof Date;
+}
+function example(a: Date | HTMLInputElement) {
+    if (isDate(a)) {
+        return a.getTime();
+    }
+}
 compter?.addEventListener("click", increment);
