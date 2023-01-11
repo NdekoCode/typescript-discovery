@@ -1,6 +1,6 @@
 "use strict";
 let i = 0;
-const compter = document.getElementById("compter");
+const compter = document.querySelector('#compter');
 const increment = (e) => {
     i++;
     const span = compter === null || compter === void 0 ? void 0 : compter.querySelector('span');

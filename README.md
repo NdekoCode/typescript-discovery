@@ -179,13 +179,13 @@ function printId(id: string | number) {
         console.log(id.toUpperCase());
     }
 }
-
 ```
 
 Il permet aussi de détecter le type d'une manière automatique au fur et à mesure de l'exécution du code TypeScript surtout quand on ne sait pas d'avance que sera le type d'une variable qui est composé de plusieurs type, le narrowing nous permet de diminuer les possibilités.
 Grace aux narrowing on peut utiliser de notation comme "is TypeOfObject" comme :
 
 ```{TS}
+
 function isDate(a: any): a is Date {
     return a instanceof Date;
 }
@@ -193,4 +193,14 @@ function example(a: Date | HTMLInputElement) {
     if (isDate(a)) {
         return a.getTime();
     }
-}```
+}
+```
+
+Le principe du narrowing est très utile, c'est lorsque vous avez quelque chose qui peut avoir plusieurs via des **`condition`**, au mot clé **`typeof`** et mot clé **`instanceof`** vous pouvez réduire le type pour être sure du type dans une condition et cela vous permet de faire votre script convenable et des fois d'éliminer la valeur `null`.
+
+Pour faire du narrowing de force on utilise le point d'exclamation à la fin de la déclaration du valeur d'une variable ou une assertion de type avec le mot clé `as`, et cela, pour dire que `Le contenu de cette variable ne peut etre null` ou avec.
+
+```{TS}
+const button = document.querySelector('#compter')!
+const btn = document.querySelector('#compter') as HTMLButtonElement
+```
