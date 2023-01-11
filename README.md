@@ -115,6 +115,7 @@ const user:{username:string,firstname:string,lastname:string,[key:string]:string
 
 ```
 
+⚠ On a aussi un autre type qui est le type `never`, c'est un type qui est souvent autogéré par le narrowing et qui est là pour vous dire `"Ce type de variable n'existera jamais que vous avez obtenus"` ou vous dire que `"la condition que vous avez ne va jamais se resoudre et n'a pas de sens"`.
 Pour des objets qui correspondent à des types spécifiques vous pouvez simplement mettre le nom de l'objet:
 
 ```{TS}
@@ -164,3 +165,32 @@ function printId(id: number | string) {
 
 }
 ```
+
+### Narrowing
+
+Le Narrowing c'est un système qui permet à TypeScript d'éliminer des cas et de réduire les types possibles pour vos variables.
+On peut avoir du narrowing grâce aux **`condition`**, au mot clé **`typeof`** et mot clé **`instanceof`**
+
+```{TS}
+function printId(id: string | number) {
+    if (typeof id === "number") {
+        console.log((id * 3).toString());
+    } else {
+        console.log(id.toUpperCase());
+    }
+}
+
+```
+
+Il permet aussi de détecter le type d'une manière automatique au fur et à mesure de l'exécution du code TypeScript surtout quand on ne sait pas d'avance que sera le type d'une variable qui est composé de plusieurs type, le narrowing nous permet de diminuer les possibilités.
+Grace aux narrowing on peut utiliser de notation comme "is TypeOfObject" comme :
+
+```{TS}
+function isDate(a: any): a is Date {
+    return a instanceof Date;
+}
+function example(a: Date | HTMLInputElement) {
+    if (isDate(a)) {
+        return a.getTime();
+    }
+}```
