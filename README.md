@@ -73,7 +73,7 @@ Une fois que l'on a écrit notre code TypeScript il faut maintenant le compiler 
         "outDir": "dist",
         // La version javascript qu'on cible
         "target": "ES2015",
-        // Compile le code que si il n'y a pas d'erreur, ainsi ça nous permet de nous rassurer que le fichier compiler ne contient pas d'erreur
+        // Compile le code que si il n'y a pas d'erreur, ainsi ça nous permet de vous rassurer que le fichier JS compiler ou generer ne contient pas d'erreur
         "noEmitOnError": true,
         "strict": true,
         // On ecoute à chaque fois qu'il y a des modifications
