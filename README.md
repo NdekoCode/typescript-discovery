@@ -218,3 +218,4 @@ const user:User = {username:"Ndekocode",fistName:"Arick",lastName:"Bulakali",ema
 ```
 
 Le générique, c'est le truc le plus puissant que l'on a au niveau de TypeScript
+On les utilise de differentes manière comme ces trois car:
