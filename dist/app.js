@@ -8,20 +8,4 @@ const increment = (e) => {
         span.innerText = i.toString();
     }
 };
-function printId(id) {
-    if (typeof id === "number") {
-        console.log((id * 3).toString());
-    }
-    else {
-        console.log(id.toUpperCase());
-    }
-}
-function isDate(a) {
-    return a instanceof Date;
-}
-function example(a) {
-    if (isDate(a)) {
-        return a.getTime();
-    }
-}
 compter === null || compter === void 0 ? void 0 : compter.addEventListener("click", increment);
