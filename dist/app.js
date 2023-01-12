@@ -1,7 +1,8 @@
 "use strict";
+const user = { email: "", password: "", fistName: '', lastName: "" };
 let i = 0;
-const user = { email: "#compter", password: "", fistName: '', lastName: "" };
 const compter = document.querySelector('#compter');
+const genericArray = ["Lol", "Learn", 3];
 const increment = (e) => {
     i++;
     const span = compter === null || compter === void 0 ? void 0 : compter.querySelector('span');
@@ -26,3 +27,16 @@ function example(a) {
     }
 }
 compter === null || compter === void 0 ? void 0 : compter.addEventListener("click", increment);
+function identity(args) {
+    return args;
+}
+function firstIndice(arg) {
+    return arg[0];
+}
+function consoleSize(arg) {
+    console.log(arg.length);
+    return arg;
+}
+const abb = consoleSize("Apprendre");
+const tab = firstIndice(["Bum", "Mub", "ubM"]);
+const varIdentity = identity("Hello");

@@ -216,3 +216,5 @@ En générale le nom des Alias est en majuscule et pour le créer il faut commen
 type User = { username: string, firstName: string, lastName: string,email:string,password: string}
 const user:User = {username:"Ndekocode",fistName:"Arick",lastName:"Bulakali",email:"arickbulakali@ndekocode.com",password:"lolololol"}
 ```
+
+Le générique, c'est le truc le plus puissant que l'on a au niveau de TypeScript
