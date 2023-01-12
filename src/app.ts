@@ -1,5 +1,7 @@
 let i: number = 0;
-const compter = <HTMLButtonElement>document.querySelector('#compter')!
+type User = { email: string, password: string, fistName: string, lastName: string, [ key: string ]: string }
+const user: User = { email: "#compter", password: "", fistName: '', lastName: "" }
+const compter = <HTMLButtonElement>document.querySelector('#compter')
 const increment: (e: Event) => void = (e) => {
     i++;
     const span = compter?.querySelector('span') as HTMLSpanElement;

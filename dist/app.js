@@ -1,5 +1,6 @@
 "use strict";
 let i = 0;
+const user = { email: "#compter", password: "", fistName: '', lastName: "" };
 const compter = document.querySelector('#compter');
 const increment = (e) => {
     i++;

@@ -204,3 +204,15 @@ Pour faire du narrowing de force on utilise le point d'exclamation à la fin de 
 const button = document.querySelector('#compter')!
 const btn = document.querySelector('#compter') as HTMLButtonElement
 ```
+
+### Alias et Générique
+
+Dans certaines situations certains types peuvent être compliqué et à cause de cela ça peut être pénible de se répéter si on doit utiliser ce même type dans notre code une fois ou encore plusieurs fois.
+Alors pour remédier à ce problème, vous pouvez créer un Alias de type qui va permettre d'avoir un mot clé pour utiliser ce type là.
+En générale le nom des Alias est en majuscule et pour le créer il faut commencer par le mot clé `type` suivis du nom de l'alias que vous voulez creer puis ensuite l'egaliser à la description que vous voulez, et pour l'utiliser il faut le faire juste comme pour le variable avec un deux point ":" suivis du nom de l'alias que vous voulez utiliser.
+
+```{TS}
+// On créer un Alias
+type User = { username: string, firstName: string, lastName: string,email:string,password: string}
+const user:User = {username:"Ndekocode",fistName:"Arick",lastName:"Bulakali",email:"arickbulakali@ndekocode.com",password:"lolololol"}
+```
