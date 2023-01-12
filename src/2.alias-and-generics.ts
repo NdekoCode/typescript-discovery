@@ -2,8 +2,8 @@
 type User = { email: string, password: string, fistName: string, lastName: string, [ key: string ]: string }
 type DateString = string;
 type Id = number | string;
-// ALIAS+GENERIC ==> STRUCTURE : type + nameOfType<nameOfGenerics> = DescriptionOfGenericType
-type identity<ArgType> = (arg: ArgType) => ArgType
+// ALIAS+NAME<GENERIC> ==> STRUCTURE : type + nameOfType<nameOfGenerics> = DescriptionOfGenericType
+type Identity<ArgType> = (arg: ArgType) => ArgType
 
 // Using Alias: nameOfVariable:NameOfTypeDefined = ValueOfVariable
 const user: User = { email: "", password: "", fistName: '', lastName: "" };
@@ -18,7 +18,7 @@ function identity<ArgType>(args: ArgType): ArgType {
 function firstIndice<Type>(arg: Type[]): Type {
     return arg[ 0 ];
 }
-// Add a contrain to a Generic
+// Add a contrain to a Generic: l'argument doit avoir obligatoirement un attribut length
 function consoleSize<Type extends { length: number }>(arg: Type): Type {
     console.log(arg.length);
     return arg;
