@@ -44,19 +44,11 @@ abstract class Geometry {
     abstract surface(): number
 }
 
-Geometry.origin
 class Point extends Geometry {
     x: number = 0;
     y: number = 0;
     surface() {
         return this.x * this.y;
-    }
-}
-class Triangle extends Geometry {
-    x: number = 2;
-    y: number = 2;
-    surface(): number {
-        return x;
     }
 }
 function getX(p: Point): number {

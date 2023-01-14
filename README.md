@@ -309,3 +309,57 @@ console.log(newY);
 ### class Abstraite
 
 On a la possibilité de spécifier qu'une classe va être abstraite, ça veut dire que les méthodes abstraites que cette classe abstraite implémenter devront être obligatoirement implémenter par des enfants de cette classe.
+
+```{TS}
+abstract class Geometry {
+    x: number = 0;
+    y: number = 0;
+    static #origin: origin;
+    static {
+        Geometry.#origin = { x: 0, y: 0 }
+    }
+    abstract surface(): number
+}
+
+class Point extends Geometry {
+    x: number = 0;
+    y: number = 0;
+    surface() {
+        return this.x * this.y;
+    }
+}
+```
+
+### Interface
+
+Les interfaces c'est un peu comme le `Type`, à la difference que les interfaces eux sont ouvert et peuvent contenir meme des methodes, et une classe qui implemente une interface doit necessairement et obligatoirement avoir les methodes et les proprieter de cette interface.
+Les interfaces sont ouvert car il peuvent etre declarer plusieurs fois sans generer des erreurs dans ce cas ils vont fusionner car ils ont le meme nom.
+
+```{TS}
+interface Point {
+    x: number;
+}
+interface Point {
+    y: number
+}
+au final cela va nous generer une interface de type car ils vont fusionner
+interface Point {
+    x: number;
+    y: number;
+}
+```
+
+Voici maintenant une classe qui implemente une interface, il aura donc obligatoirement ses methodes et proprieter
+
+```{TS}
+
+class Triangle implements Point {
+    x = 0;
+    y = 0;
+
+    surface(): number {
+        return x;
+    }
+}
+
+```
