@@ -182,7 +182,7 @@ function printId(id: string | number) {
 ```
 
 Il permet aussi de détecter le type d'une manière automatique au fur et à mesure de l'exécution du code TypeScript surtout quand on ne sait pas d'avance que sera le type d'une variable qui est composé de plusieurs type, le narrowing nous permet de diminuer les possibilités.
-Grace aux narrowing on peut utiliser de notation comme "is TypeOfObject" comme :
+Grace aux narrowing on peut utiliser de notation comme "`variable is TypeOfObject`" comme :
 
 ```{TS}
 
@@ -196,9 +196,9 @@ function example(a: Date | HTMLInputElement) {
 }
 ```
 
-Le principe du narrowing est très utile, c'est lorsque vous avez quelque chose qui peut avoir plusieurs via des **`condition`**, au mot clé **`typeof`** et mot clé **`instanceof`** vous pouvez réduire le type pour être sure du type dans une condition et cela vous permet de faire votre script convenable et des fois d'éliminer la valeur `null`.
+Le principe du narrowing est très utile, c'est lorsque vous avez quelque chose qui peut avoir plusieurs type, maintenant vous raccourcissez les possibilités via des **`condition`**, au mot clé **`typeof`** ou au mot clé **`instanceof`** vous pouvez réduire le type pour être sure du type dans une condition et cela vous permet de faire votre script convenable et des fois d'éliminer la valeur `null`.
 
-Pour faire du narrowing de force on utilise le point d'exclamation à la fin de la déclaration du valeur d'une variable ou une assertion de type avec le mot clé `as`, et cela, pour dire que `Le contenu de cette variable ne peut etre null`, mais pour cela il faut être à 100% sûre que cet élément existe dans la page, car vous empêcher une vérification que TypeScript a faite, mais on préfèrera utiliser le narrowing basé sur les conditions car au moins ça permet au code de gérer les cas où les formats qui est reçus en paramètre ne correspond pas à ce que l'on attend.
+Pour faire du narrowing de force on utilise le point d'exclamation à la fin de la déclaration du valeur d'une variable ou une assertion de type avec le mot clé `as`, et cela, pour dire que `Le contenu de cette variable ne peut etre null`, mais pour cela il faut être à 100% sûre que cet élément existe dans la page, car vous empêcher une vérification que TypeScript a faite, mais on préfèrera utiliser le narrowing basé sur les conditions, car au moins ça permet au code de gérer les cas où les formats qui est reçus en paramètre ne correspond pas à ce que l'on attend.
 
 ```{TS}
 const button = document.querySelector('#compter')!
@@ -207,15 +207,45 @@ const btn = document.querySelector('#compter') as HTMLButtonElement
 
 ### Alias et Générique
 
-Dans certaines situations certains types peuvent être compliqué et à cause de cela ça peut être pénible de se répéter si on doit utiliser ce même type dans notre code une fois ou encore plusieurs fois.
+Dans certaines situations certains types peuvent être compliqué et à cause de cela ça peut être pénible de se répéter si on doit utiliser ce même type dans notre code une fois encore ou plusieurs fois de suite.
 Alors pour remédier à ce problème, vous pouvez créer un Alias de type qui va permettre d'avoir un mot clé pour utiliser ce type là.
-En générale le nom des Alias est en majuscule et pour le créer il faut commencer par le mot clé `type` suivis du nom de l'alias que vous voulez creer puis ensuite l'egaliser à la description que vous voulez, et pour l'utiliser il faut le faire juste comme pour le variable avec un deux point ":" suivis du nom de l'alias que vous voulez utiliser.
+En général le nom des Alias est en majuscule et pour le créer il faut commencer par le mot clé `type` suivis du nom de l'alias que vous voulez créer puis l'égaliser à la description que vous voulez, et pour l'utiliser il faut le faire juste comme pour le variable avec un deux point ":" suivis du nom de l'alias que vous voulez utiliser.
 
 ```{TS}
 // On créer un Alias
 type User = { username: string, firstName: string, lastName: string,email:string,password: string}
+// On utilise notre alias
 const user:User = {username:"Ndekocode",fistName:"Arick",lastName:"Bulakali",email:"arickbulakali@ndekocode.com",password:"lolololol"}
 ```
 
 Le générique, c'est le truc le plus puissant que l'on a au niveau de TypeScript
-On les utilise de differentes manière comme ces trois car:
+On les utilise de différente manière comme ces trois car:
+
+```{TS}
+// On les utilisent pour typer le contenu d'un tableau
+const genericArray: Array<string | number> = [ "Lol", "Learn", 3 ];
+
+//Pour un retour previsible d'une fonction dependant des paramètres Generic on function definition which retourn the type of arg params
+function identity<ArgType>(args: ArgType): ArgType {
+    return args;
+}
+function firstIndice<Type>(arg: Type[]): Type {
+    return arg[ 0 ];
+}
+// Add a contrain to a Generic: l'argument doit avoir obligatoirement un attribut length
+function consoleSize<Type extends { length: number }>(arg: Type): Type {
+    console.log(arg.length);
+    return arg;
+}
+// tab type:String: Dynamic par rapport à ce que on lui passe en argument
+const abb = consoleSize("Apprendre");
+// tab type:String: Dynamic par rapport à ce que on lui passe en argument
+const tab = firstIndice([ "Bum", "Mub", "ubM" ]);
+
+// Dynamic par rapport à ce que on lui passe en argument
+const varIdentity = identity("Hello");
+```
+
+### Readonly
+
+Readonly est une propriété en TypeScript qui permet de dire qu'une variable est en lecture seul, `readonly` se met devant le type d'une variable et une fois cela fait il permet de dire que la variable ne peut subir de modification mutable(c-à-d des modification qui peuvent altérer la référence variable).

@@ -13,3 +13,4 @@ Narrowing
 narrowing
 TypeOfObject
 is
+Readonly
