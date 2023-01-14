@@ -18,3 +18,5 @@ readonly
 spread
 class
 propriéter
+generics
+coak

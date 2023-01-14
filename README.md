@@ -246,6 +246,8 @@ const tab = firstIndice([ "Bum", "Mub", "ubM" ]);
 const varIdentity = identity("Hello");
 ```
 
+Souvent les generics on aura tendances à les nommer avec une seule lettre en majuscule, mais vous pouvez utiliser plusieurs lettres si c'est plus claire pour vous, car l'objectif, c'est de comprendre le type que vous voulez spécifie et nom la façon de l'écrire.
+
 ### Readonly
 
 Readonly est une propriété en TypeScript qui permet de dire qu'une variable est en lecture seul, `readonly` se met devant le type d'une variable et une fois cela fait il permet de dire que la variable ne peut subir de modification mutable(c-à-d des modification qui peuvent altérer la référence variable), donc que la variable ou la propriété qui est en `readonly` ne peut être modifié et donc pour les type `Array` on ne peut pas utiliser les méthodes `push, unshift, reverse` qui modifie le tableau lui-même ainsi que ces référence
@@ -266,3 +268,40 @@ Le TypeScript se calques sur les nouvelles fonctionnalités du JavaScript, du co
 
 - `private`: une propriété qui est privé ne peut être accéder qu'à l'intérieur de la classe
 - `private`: une propriété qui est protéger ne peut être accéder qu'à l'intérieur de la classe, mais aussi à l'intérieur des classes enfants de la classe détentrice de la propriéter dite protéger
+
+### Le DOC typing
+
+- On dit souvent: si ça fait coak et que ça marche comme un canard, donc c'est un canard, Car TypeScript ne vérifie pas vraiment si c'est vraiment l'instance de quelque chose, il se contente seulement de vérifier la forme.
+
+```{TS}
+class Point {
+    x: number = 0;
+    y: number = 0;
+}
+
+class Geometry {
+    x: number = 0;
+    y: number = 0;
+    suface: number = 0;
+}
+// Typescript va laisser passer toutes les classe qui ont comme proprieter x ie il va juste verifier la forme et non si c'est une instance de P
+function getX(p: Point): number {
+        return p.x;
+}
+const x = getX(new Geometry())
+console.log(x);
+// C'est donc à nous de faire les verification necessaire avec instanceof
+functin getY(p: Point) {
+
+    if (p instanceof Point) {
+        return p.y;
+    }
+    throw Error("Not an instance of Point");
+}
+// Va retourner une erreur
+const y = getY(new Geometry());
+console.log(y);
+// Va passer sans probleme
+const newY = getY(new Point());
+console.log(newY);
+```
