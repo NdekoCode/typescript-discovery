@@ -305,3 +305,7 @@ console.log(y);
 const newY = getY(new Point());
 console.log(newY);
 ```
+
+### class Abstraite
+
+On a la possibilité de spécifier qu'une classe va être abstraite, ça veut dire que les méthodes abstraites que cette classe abstraite implémenter devront être obligatoirement implémenter par des enfants de cette classe.

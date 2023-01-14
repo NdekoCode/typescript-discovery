@@ -32,15 +32,32 @@ class Collection<T> {
 const users = new Collection([ "bum", 23 ]);
 const firstUser = users.first();
 const newUser = users.add(45);
-class Point {
+
+type origin = { x: number, y: number }
+abstract class Geometry {
     x: number = 0;
     y: number = 0;
+    static #origin: origin;
+    static {
+        Geometry.#origin = { x: 0, y: 0 }
+    }
+    abstract surface(): number
 }
 
-class Geometry {
+Geometry.origin
+class Point extends Geometry {
     x: number = 0;
     y: number = 0;
-    suface: number = 0;
+    surface() {
+        return this.x * this.y;
+    }
+}
+class Triangle extends Geometry {
+    x: number = 2;
+    y: number = 2;
+    surface(): number {
+        return x;
+    }
 }
 function getX(p: Point): number {
     if (p instanceof Point) {
