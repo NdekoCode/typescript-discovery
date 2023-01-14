@@ -182,7 +182,7 @@ function printId(id: string | number) {
 ```
 
 Il permet aussi de détecter le type d'une manière automatique au fur et à mesure de l'exécution du code TypeScript surtout quand on ne sait pas d'avance que sera le type d'une variable qui est composé de plusieurs type, le narrowing nous permet de diminuer les possibilités.
-Grace aux narrowing on peut utiliser de notation comme "is TypeOfObject" comme :
+Grace aux narrowing on peut utiliser de notation comme "`variable is TypeOfObject`" comme :
 
 ```{TS}
 
@@ -196,9 +196,9 @@ function example(a: Date | HTMLInputElement) {
 }
 ```
 
-Le principe du narrowing est très utile, c'est lorsque vous avez quelque chose qui peut avoir plusieurs via des **`condition`**, au mot clé **`typeof`** et mot clé **`instanceof`** vous pouvez réduire le type pour être sure du type dans une condition et cela vous permet de faire votre script convenable et des fois d'éliminer la valeur `null`.
+Le principe du narrowing est très utile, c'est lorsque vous avez quelque chose qui peut avoir plusieurs type, maintenant vous raccourcissez les possibilités via des **`condition`**, au mot clé **`typeof`** ou au mot clé **`instanceof`** vous pouvez réduire le type pour être sure du type dans une condition et cela vous permet de faire votre script convenable et des fois d'éliminer la valeur `null`.
 
-Pour faire du narrowing de force on utilise le point d'exclamation à la fin de la déclaration du valeur d'une variable ou une assertion de type avec le mot clé `as`, et cela, pour dire que `Le contenu de cette variable ne peut etre null`, mais pour cela il faut être à 100% sûre que cet élément existe dans la page, car vous empêcher une vérification que TypeScript a faite, mais on préfèrera utiliser le narrowing basé sur les conditions car au moins ça permet au code de gérer les cas où les formats qui est reçus en paramètre ne correspond pas à ce que l'on attend.
+Pour faire du narrowing de force on utilise le point d'exclamation à la fin de la déclaration du valeur d'une variable ou une assertion de type avec le mot clé `as`, et cela, pour dire que `Le contenu de cette variable ne peut etre null`, mais pour cela il faut être à 100% sûre que cet élément existe dans la page, car vous empêcher une vérification que TypeScript a faite, mais on préfèrera utiliser le narrowing basé sur les conditions, car au moins ça permet au code de gérer les cas où les formats qui est reçus en paramètre ne correspond pas à ce que l'on attend.
 
 ```{TS}
 const button = document.querySelector('#compter')!
@@ -207,15 +207,159 @@ const btn = document.querySelector('#compter') as HTMLButtonElement
 
 ### Alias et Générique
 
-Dans certaines situations certains types peuvent être compliqué et à cause de cela ça peut être pénible de se répéter si on doit utiliser ce même type dans notre code une fois ou encore plusieurs fois.
+Dans certaines situations certains types peuvent être compliqué et à cause de cela ça peut être pénible de se répéter si on doit utiliser ce même type dans notre code une fois encore ou plusieurs fois de suite.
 Alors pour remédier à ce problème, vous pouvez créer un Alias de type qui va permettre d'avoir un mot clé pour utiliser ce type là.
-En générale le nom des Alias est en majuscule et pour le créer il faut commencer par le mot clé `type` suivis du nom de l'alias que vous voulez creer puis ensuite l'egaliser à la description que vous voulez, et pour l'utiliser il faut le faire juste comme pour le variable avec un deux point ":" suivis du nom de l'alias que vous voulez utiliser.
+En général le nom des Alias est en majuscule et pour le créer il faut commencer par le mot clé `type` suivis du nom de l'alias que vous voulez créer puis l'égaliser à la description que vous voulez, et pour l'utiliser il faut le faire juste comme pour le variable avec un deux point ":" suivis du nom de l'alias que vous voulez utiliser.
 
 ```{TS}
 // On créer un Alias
 type User = { username: string, firstName: string, lastName: string,email:string,password: string}
+// On utilise notre alias
 const user:User = {username:"Ndekocode",fistName:"Arick",lastName:"Bulakali",email:"arickbulakali@ndekocode.com",password:"lolololol"}
 ```
 
 Le générique, c'est le truc le plus puissant que l'on a au niveau de TypeScript
-On les utilise de differentes manière comme ces trois car:
+On les utilise de différente manière comme ces trois car:
+
+```{TS}
+// On les utilisent pour typer le contenu d'un tableau
+const genericArray: Array<string | number> = [ "Lol", "Learn", 3 ];
+
+//Pour un retour previsible d'une fonction dependant des paramètres Generic on function definition which retourn the type of arg params
+function identity<ArgType>(args: ArgType): ArgType {
+    return args;
+}
+function firstIndice<Type>(arg: Type[]): Type {
+    return arg[ 0 ];
+}
+// Add a contrain to a Generic: l'argument doit avoir obligatoirement un attribut length
+function consoleSize<Type extends { length: number }>(arg: Type): Type {
+    console.log(arg.length);
+    return arg;
+}
+// tab type:String: Dynamic par rapport à ce que on lui passe en argument
+const abb = consoleSize("Apprendre");
+// tab type:String: Dynamic par rapport à ce que on lui passe en argument
+const tab = firstIndice([ "Bum", "Mub", "ubM" ]);
+
+// Dynamic par rapport à ce que on lui passe en argument
+const varIdentity = identity("Hello");
+```
+
+Souvent les generics on aura tendances à les nommer avec une seule lettre en majuscule, mais vous pouvez utiliser plusieurs lettres si c'est plus claire pour vous, car l'objectif, c'est de comprendre le type que vous voulez spécifie et nom la façon de l'écrire.
+
+### Readonly
+
+Readonly est une propriété en TypeScript qui permet de dire qu'une variable est en lecture seul, `readonly` se met devant le type d'une variable et une fois cela fait il permet de dire que la variable ne peut subir de modification mutable(c-à-d des modification qui peuvent altérer la référence variable), donc que la variable ou la propriété qui est en `readonly` ne peut être modifié et donc pour les type `Array` on ne peut pas utiliser les méthodes `push, unshift, reverse` qui modifie le tableau lui-même ainsi que ces référence
+
+```{TS}
+function reverse<T>(arg: readonly T[]): T[] {
+    return arg.slice();
+}
+```
+
+On peut même mettre l'attribut readonly même devant le type de retour d'une fonction pour dire que le retour de la fonction ne peut être modifié.
+Ce drapeau `readonly` peut être rajouté devant n'importe quel type.
+Pour le type `Array` et `object` les meilleures façons de contourner le `readonly`, c'est de cloner le tableau ou l'objet avec n'importe quoi comme le `spread Operator` ou avec le JSON puis c'est sur ce nouveau tableau ou objet que l'on va faire nos traitements comme ça on ne modifie pas le drapeau original et on a résolu ce problème là.s
+
+## Les class
+
+Le TypeScript se calques sur les nouvelles fonctionnalités du JavaScript, du coup les classes en TypeScript fonctionnent comme les classes en JavaScript classique, la spécificité en TypeScript est que l'on va pouvoir rajouter un modificateur devant les propriétés et les méthodes pour spécifier sa visibilité comme dans les langages orienter objet classique et pour cela on a trois type de visibilités :
+
+- `private`: une propriété qui est privé ne peut être accéder qu'à l'intérieur de la classe
+- `private`: une propriété qui est protéger ne peut être accéder qu'à l'intérieur de la classe, mais aussi à l'intérieur des classes enfants de la classe détentrice de la propriéter dite protéger
+
+### Le DOC typing
+
+- On dit souvent: si ça fait coak et que ça marche comme un canard, donc c'est un canard, Car TypeScript ne vérifie pas vraiment si c'est vraiment l'instance de quelque chose, il se contente seulement de vérifier la forme.
+
+```{TS}
+class Point {
+    x: number = 0;
+    y: number = 0;
+}
+
+class Geometry {
+    x: number = 0;
+    y: number = 0;
+    suface: number = 0;
+}
+// Typescript va laisser passer toutes les classe qui ont comme proprieter x ie il va juste verifier la forme et non si c'est une instance de P
+function getX(p: Point): number {
+        return p.x;
+}
+const x = getX(new Geometry())
+console.log(x);
+// C'est donc à nous de faire les verification necessaire avec instanceof
+functin getY(p: Point) {
+
+    if (p instanceof Point) {
+        return p.y;
+    }
+    throw Error("Not an instance of Point");
+}
+// Va retourner une erreur
+const y = getY(new Geometry());
+console.log(y);
+// Va passer sans probleme
+const newY = getY(new Point());
+console.log(newY);
+```
+
+### class Abstraite
+
+On a la possibilité de spécifier qu'une classe va être abstraite, ça veut dire que les méthodes abstraites que cette classe abstraite implémenter devront être obligatoirement implémenter par des enfants de cette classe.
+
+```{TS}
+abstract class Geometry {
+    x: number = 0;
+    y: number = 0;
+    static #origin: origin;
+    static {
+        Geometry.#origin = { x: 0, y: 0 }
+    }
+    abstract surface(): number
+}
+
+class Point extends Geometry {
+    x: number = 0;
+    y: number = 0;
+    surface() {
+        return this.x * this.y;
+    }
+}
+```
+
+### Interface
+
+Les interfaces c'est un peu comme le `Type`, à la difference que les interfaces eux sont ouvert et peuvent contenir meme des methodes, et une classe qui implemente une interface doit necessairement et obligatoirement avoir les methodes et les proprieter de cette interface.
+Les interfaces sont ouvert car il peuvent etre declarer plusieurs fois sans generer des erreurs dans ce cas ils vont fusionner car ils ont le meme nom.
+
+```{TS}
+interface Point {
+    x: number;
+}
+interface Point {
+    y: number
+}
+au final cela va nous generer une interface de type car ils vont fusionner
+interface Point {
+    x: number;
+    y: number;
+}
+```
+
+Voici maintenant une classe qui implemente une interface, il aura donc obligatoirement ses methodes et proprieter
+
+```{TS}
+
+class Triangle implements Point {
+    x = 0;
+    y = 0;
+
+    surface(): number {
+        return x;
+    }
+}
+
+```
