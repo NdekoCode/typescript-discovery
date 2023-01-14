@@ -14,3 +14,7 @@ narrowing
 TypeOfObject
 is
 Readonly
+readonly
+spread
+class
+propriéter

@@ -248,4 +248,21 @@ const varIdentity = identity("Hello");
 
 ### Readonly
 
-Readonly est une propriété en TypeScript qui permet de dire qu'une variable est en lecture seul, `readonly` se met devant le type d'une variable et une fois cela fait il permet de dire que la variable ne peut subir de modification mutable(c-à-d des modification qui peuvent altérer la référence variable).
+Readonly est une propriété en TypeScript qui permet de dire qu'une variable est en lecture seul, `readonly` se met devant le type d'une variable et une fois cela fait il permet de dire que la variable ne peut subir de modification mutable(c-à-d des modification qui peuvent altérer la référence variable), donc que la variable ou la propriété qui est en `readonly` ne peut être modifié et donc pour les type `Array` on ne peut pas utiliser les méthodes `push, unshift, reverse` qui modifie le tableau lui-même ainsi que ces référence
+
+```{TS}
+function reverse<T>(arg: readonly T[]): T[] {
+    return arg.slice();
+}
+```
+
+On peut même mettre l'attribut readonly même devant le type de retour d'une fonction pour dire que le retour de la fonction ne peut être modifié.
+Ce drapeau `readonly` peut être rajouté devant n'importe quel type.
+Pour le type `Array` et `object` les meilleures façons de contourner le `readonly`, c'est de cloner le tableau ou l'objet avec n'importe quoi comme le `spread Operator` ou avec le JSON puis c'est sur ce nouveau tableau ou objet que l'on va faire nos traitements comme ça on ne modifie pas le drapeau original et on a résolu ce problème là.s
+
+## Les class
+
+Le TypeScript se calques sur les nouvelles fonctionnalités du JavaScript, du coup les classes en TypeScript fonctionnent comme les classes en JavaScript classique, la spécificité en TypeScript est que l'on va pouvoir rajouter un modificateur devant les propriétés et les méthodes pour spécifier sa visibilité comme dans les langages orienter objet classique et pour cela on a trois type de visibilités :
+
+- `private`: une propriété qui est privé ne peut être accéder qu'à l'intérieur de la classe
+- `private`: une propriété qui est protéger ne peut être accéder qu'à l'intérieur de la classe, mais aussi à l'intérieur des classes enfants de la classe détentrice de la propriéter dite protéger
