@@ -4,14 +4,14 @@ function reverse<T>(arg: T[]): readonly T[] {
 class Person {
     private age = 18;
     public firstname = "Arick";
-    protected username = "Ndekocode"
+    protected username = "Ndekocode Username";
 
 
 }
 class GDAStudent extends Person {
-    getAge() {
+    log() {
         console.log(this.username);
     }
 }
 const ndeko = new GDAStudent();
-console.log(ndeko);
+console.log(ndeko.log());
