@@ -363,3 +363,28 @@ class Triangle implements Point {
 }
 
 ```
+
+### Unknown, Tuple, Enum
+
+- Unknown: est un type particulier qui est un peu comme le type `any` avec une difference que lui ne peut pas etre utiliser avant d'etre preciser, on le privilegie beaucoup plus à `any` car lorsqu on utilise un `any` automatiquement TypeScript va retirer la verification des types, par contre dans certaines situations cela ne nous conviendra pas, nous ce que l'on aimerai faire c'est lui dire "Pour le moment on ne connait pas le type mais plus tard on va preciser le type avec du narrowing et ça nous permettra de tester les choses" dans ce genre de cas privilegier le type `unknown`
+
+```{TS}
+
+  // cenario 1:
+  function test(arg: any) {
+    arg.demo = 3; // ça passe
+
+}
+
+ // scénario 2:
+  function test(arg: unknown) {
+    arg.demo = 3; // ça passe pas
+}
+
+// scénario 3:
+function test(arg: unknown) {
+    if (arg instanceof HTMLInputElement) {
+        arg.value = (3).toString(); // ca passe
+    }
+}
+```
