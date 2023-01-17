@@ -146,7 +146,7 @@ const whenUserClick:(e:MouseEvent)=>void = (e)=>{
 
 ⚠ Quand vous utilisez le mot clé `void` cela veut dire que le retour ne sera pas utilisé, mais si vous avez une fonction void qui retourne quelque chose et que vous utilisez la valeur retourner, dans ce cas cela va générer une erreur.
 
-Dans certaines situations, il ne va pas être capable de deviner le type, surtout pour les éléments du DOM et quelques spécificités. Pour remédier à cella, vous pouvez utiliser ce que l'on appelle **l'assertion de type** et c'est indiquer à TypeScript `de quel type va etre ce retour là` et pour cela on utilise deux notions, l'un en utilisant le mot clé as et l'autre en utilisant une syntaxe similaire au JSX et il respecte et vérifie cela en se basant sur le checker installer.
+Dans certaines situations, il ne va pas être capable de deviner le type, surtout pour les éléments du DOM et quelques spécificités. Pour remédier à cella, vous pouvez utiliser ce que l'on appelle **l'assertion de type** et c'est indiquer à TypeScript `de quel type va etre ce retour là` et pour cela on utilise deux notions, l'un en utilisant le mot clé `as` et l'autre en utilisant une syntaxe similaire au JSX et il respecte et vérifie cela en se basant sur le checker installer.
 
 ```{TS}
 const button = document.querySelector('#compter') as HTMLButtonElement
@@ -362,4 +362,83 @@ class Triangle implements Point {
     }
 }
 
+```
+
+### Unknown, Tuple, Enum
+
+- Unknown: est un type particulier qui est un peu comme le type `any` avec une difference que lui ne peut pas etre utiliser avant d'etre preciser, on le privilegie beaucoup plus à `any` car lorsqu on utilise un `any` automatiquement TypeScript va retirer la verification des types, par contre dans certaines situations cela ne nous conviendra pas, nous ce que l'on aimerai faire c'est lui dire "Pour le moment on ne connait pas le type mais plus tard on va preciser le type avec du narrowing et ça nous permettra de tester les choses" dans ce genre de cas privilegier le type `unknown`
+
+```{TS}
+
+  // cenario 1:
+  function test(arg: any) {
+    arg.demo = 3; // ça passe
+
+}
+
+ // scénario 2:
+  function test(arg: unknown) {
+    arg.demo = 3; // ça passe pas
+}
+
+// scénario 3:
+function test(arg: unknown) {
+    if (arg instanceof HTMLInputElement) {
+        arg.value = (3).toString(); // ca passe
+    }
+}
+```
+
+De maniere generale on va essayer au maximum d'eviter le `any` et on utilisera plutot le `unknown` quand on ne connait pas le type à l'avance et que l'on veut le preciser plus tard avec le `narrowing`.
+On reservera vraiment le `any` dans le cas où l'on souhaite vraiment desactiver la verification des types sur une variable precise mais avec les inconvenients que ça introduit.
+
+On a aussi les litterals, c'est une façon de TypeScript de generer des types aléatoires selon la valeur que on lui passe
+
+```{TS}
+const str = "Hello" // type: "Hello";
+const nbr = 3; // type: 3
+```
+
+Si on ne precise pas le type d'une variable alors la variable va se transformer en litteral et prendra comme type la valeur qu'on lui assigne, sauf pour le cas des objets qui vont s'adapter
+
+```{TS}
+const config = { isPrivate: true, isPublic: false} // type: {isPrivate:boolean, isPublic: boolean}
+```
+
+Pour que les type objet qu'on initialise d'une maniere implicite sans preciser de type se comporte aussi de manière litteral il faut le lui obliger en utilisant les assertion avec le mot clé `as`
+
+```{TS}
+const config = { isPrivate: true as true, isPublic: false as const} // type: {isPrivate:true, isPublic: false}
+// Ou encore
+const config = { isPrivate: true , isPublic: false} as const // type: {isPrivate:true, isPublic: false}
+```
+
+- Un `Tuple` : un `Tuple` ca permet de faire la distinction entre un tableau qui a une taille non definit et un tableau qui a une taille fixe. pour faire un `Tuple` on utilise souvent le littéral avec les assertion du mot clé `as` ou avec des notations fixe comme:
+
+`Tuple` c'est un tableau qui est en `readonly` et donc il ne va jamais etre amener à etre modifier ni par sa taille ni par son contenus.
+
+```{TS}
+type TypeItem = [ string, number ];
+const obj = [1,2,3] as const
+// Ou encore
+const a:[string,number] = ["tomate",3]; // Est un tuple (tableau de taille 2 et restera inchanger)
+const b:(string|number)[] = ["tomate",3]; // est un tableau de taille non definis
+
+// Code Cool sur les Tuple
+const a: TypeItem = [ "Tomate", 3 ];
+const b: TypeItem = [ "Banane", 7 ];
+function merge<T extends unknown[], U extends unknown[]>(a: T, b: U): [ ...T, ...U ] {
+    return [ ...a, ...b ];
+}
+const c = merge(a, b); // est un Tuple avec comme form [string,number,string,number]
+```
+
+Donc si jamais vous avez un tableau fixe on va plutot preferer utiliser les `Tuple` parce que ça permet de conserver l'Etat du tableau et ça lui permet de bien comprendre les choses.
+
+## Petits problemes du TypeScript
+
+```{TS}
+const c =[] as string[];
+const b:string[] = [];
+console.log(c[0].toUpperCase()); // TypeScript ne va pas verifier si l'index existe et ducoup on aura uniquement que lors de l'execution du fichier Javascript mais les Tuples permette de resoudre ce problème
 ```

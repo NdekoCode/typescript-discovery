@@ -9,7 +9,7 @@ class Triangle implements Point {
     y = 0;
 
     surface(): number {
-        return x;
+        return this.x;
     }
 }
 
