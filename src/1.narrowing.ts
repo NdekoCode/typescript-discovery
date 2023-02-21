@@ -7,7 +7,7 @@ function printId(id: string | number) {
     }
 }
 // Return a typeOF and minimise type
-function isDate(a: any): a is Date {
+function isDate(a: unknown): a is Date {
     return a instanceof Date;
 }
 // Union type by minimize type
