@@ -334,6 +334,10 @@ class Point extends Geometry {
 
 Les interfaces c'est un peu comme le `Type`, à la difference que les interfaces eux sont ouvert et peuvent contenir meme des methodes, et une classe qui implemente une interface doit necessairement et obligatoirement avoir les methodes et les proprieter de cette interface.
 Les interfaces sont ouvert car il peuvent etre declarer plusieurs fois sans generer des erreurs dans ce cas ils vont fusionner car ils ont le meme nom.
+Donc les interfaces sont :
+
+- ouvert càd ils peuvent etre etendus
+- ont peut les implementer
 
 ```{TS}
 interface Point {

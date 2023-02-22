@@ -7,7 +7,7 @@ function test(arg: unknown) {
 const obj = {
     isPrivate: true,
     isPublic: false,
-} as const
+} as const;
 
 const a: TypeItem = [ "Tomate", 3 ];
 const b: TypeItem = [ "Banane", 7 ];

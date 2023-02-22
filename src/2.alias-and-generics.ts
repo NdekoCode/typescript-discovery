@@ -1,12 +1,12 @@
 // ALIAS ==> STRUCTURE : type + nameOfType = DescriptionOfType
-type User = { email: string, password: string, fistName: string, lastName: string, [ key: string ]: string }
+type User = { firstName: string, lastName: string, email: string, password: string, [ key: string ]: string }
 type DateString = string;
 type Id = number | string;
 // ALIAS+NAME<GENERIC> ==> STRUCTURE : type + nameOfType<nameOfGenerics> = DescriptionOfGenericType
 type Identity<ArgType> = (arg: ArgType) => ArgType
 
 // Using Alias: nameOfVariable:NameOfTypeDefined = ValueOfVariable
-const user: User = { email: "", password: "", fistName: '', lastName: "" };
+const user: User = { email: "", password: "", firstName: '', lastName: "" };
 
 
 const genericArray: Array<string | number> = [ "Lol", "Learn", 3 ];
