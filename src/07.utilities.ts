@@ -9,7 +9,7 @@ class Chat {
     }
 }
 
-/* 
+/*
 
 
 type nager = { nager: any }
@@ -25,4 +25,9 @@ function generator<T extends AnimalOptions>(options: T): AnimalFromOptions<T> {
 }
 
 const a = generator({ sauter: 'an' });
+
+// SI le type que l'on passe en paramètre possède une fonction "crie" alors retourne le type "U" sinon retourne le type "never"
+type AnimalCry<T> = T extends { crie: () => infer U } ? U : never;
+type A = AnimalCry<Chat>;
+type B = AnimalCry<Poisson>
 */
