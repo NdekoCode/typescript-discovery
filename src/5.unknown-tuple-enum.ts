@@ -16,3 +16,14 @@ function merge<T extends unknown[], U extends unknown[]>(a: T, b: U): [ ...T, ..
 
 }
 const c = merge(a, b);
+enum STEPS {
+    Paement,
+    Login,
+    Register,
+    Chat,
+    Message
+
+}
+const step: STEPS = STEPS.Paement;
+console.log("Lol");
+console.log(STEPS[ step ], "Lol");

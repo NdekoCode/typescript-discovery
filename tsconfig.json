@@ -4,14 +4,19 @@
     // Le dossier de sortie de nos fichier javascript
     "outDir": "dist",
     // La version javascript qu'on cible
-    "target": "ESNext",
+    "target": "ES2015",
     // Compile le code que si il n'y a pas d'erreur, ainsi ça nous permet de vous rassurer que le fichier JS compiler ou generer ne contient pas d'erreur
     "noEmitOnError": true,
     // Permet de mettre en place une verification qui va etre beaucoup plus strict et qui va vous empecher de faire des betises, par exemple pour chaque argument ou variable on sera obliger de lui passer un type, verifier certaines choses avant de faire une affectation,...
     "strict": true,
     // On ecoute à chaque fois qu'il y a des modifications
-    "watch": true
+    "watch": true,
+    "noUncheckedIndexedAccess": true,
+    "declaration": true,
+    "declarationDir": "./src/types"
   },
   // Le fichier à inclure dans le  programme
-  "files": ["./src/app.ts"]
+  "files": ["./src/06.declaration.ts"],
+  // Pour inclure les fichiers de declarations dans notre espace
+  "includes": "./src/types/**/*"
 }
