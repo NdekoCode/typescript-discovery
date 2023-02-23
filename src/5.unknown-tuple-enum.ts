@@ -7,7 +7,7 @@ function test(arg: unknown) {
 const obj = {
     isPrivate: true,
     isPublic: false,
-} as const
+} as const;
 
 const a: TypeItem = [ "Tomate", 3 ];
 const b: TypeItem = [ "Banane", 7 ];
@@ -16,3 +16,14 @@ function merge<T extends unknown[], U extends unknown[]>(a: T, b: U): [ ...T, ..
 
 }
 const c = merge(a, b);
+enum STEPS {
+    Paement,
+    Login,
+    Register,
+    Chat,
+    Message
+
+}
+const step: STEPS = STEPS.Paement;
+console.log("Lol");
+console.log(STEPS[ step ], "Lol");

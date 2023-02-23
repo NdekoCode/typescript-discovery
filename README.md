@@ -334,6 +334,10 @@ class Point extends Geometry {
 
 Les interfaces c'est un peu comme le `Type`, à la difference que les interfaces eux sont ouvert et peuvent contenir meme des methodes, et une classe qui implemente une interface doit necessairement et obligatoirement avoir les methodes et les proprieter de cette interface.
 Les interfaces sont ouvert car il peuvent etre declarer plusieurs fois sans generer des erreurs dans ce cas ils vont fusionner car ils ont le meme nom.
+Donc les interfaces sont :
+
+- ouvert càd ils peuvent etre etendus
+- ont peut les implementer
 
 ```{TS}
 interface Point {
@@ -442,3 +446,19 @@ const c =[] as string[];
 const b:string[] = [];
 console.log(c[0].toUpperCase()); // TypeScript ne va pas verifier si l'index existe et ducoup on aura uniquement que lors de l'execution du fichier Javascript mais les Tuples permette de resoudre ce problème
 ```
+
+Pour remedier à ce problème d'indexe, vous pouvez soit ajouter l'option `"noUncheckedIndexedAccess"` dans votre fichier "tsconfig.json" qui veut dire que vous ne pouvez acceder à un index d'un tableau uniquement si vous l'avez déjà tester.
+et donc il faut faire
+
+```{TS}
+
+const c =[] as string[];
+const b:string[] = [];
+if(c[0]){
+console.log(c[0].toUpperCase());
+
+}
+```
+
+Mais pour un type Tuple vous avez la posibilités d'acceder à un index sans le verifier
+car lui meme il va detecter si cet index existe ou pas
