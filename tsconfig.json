@@ -1,24 +1,33 @@
 {
   "compilerOptions": {
+    // La version javascript qu'on cible
     "target": "ESNext",
     "useDefineForClassFields": true,
+    // Pour utiliser les systeme de moule avec les import exports
     "module": "ESNext",
+    // Va nous permettre d'utiliser des types de librairies qui sont déjà pre-inclus dans TS
     "lib": ["ESNext", "DOM"],
+    // Pour utiliser l'option resolveJSONModule qui permet d'inclure les fichiers JSON avec le systeme d'import
     "moduleResolution": "Node",
+    // Pour etre capable d'importer les fichier JSON
+    "resolveJsonModule": true,
     "strict": true,
+    // Pour avoir les fichier MAP à fin de suivre les fichier
     "sourceMap": true,
     // On ecoute à chaque fois qu'il y a des modifications
     // "watch": true,
-    // Pour etre capable d'importer les fichier JSON
-    "resolveJsonModule": true,
+    // Compile le code que si il n'y a pas d'erreur, ainsi ça nous permet de vous rassurer que le fichier JS compiler ou generer ne contient pas d'erreur
+    "noEmitOnError": true,
     "isolatedModules": true,
+    // Pour utiliser aussi les modules commonJS
     "esModuleInterop": true,
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noEmitOnError": true,
+    // Pour eviter d'aller verifier les fichiers de typage des librairies
     "skipLibCheck": true
   },
+  // Pour lui où on aller faire faire le type CHeck où va se trouver les fichiers typescript à compiler
   "include": ["src"]
 }
