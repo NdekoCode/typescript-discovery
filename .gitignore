@@ -1,4 +1,6 @@
 node_modules
 .env
 *.env
+*.map
+$.map
 node_modules

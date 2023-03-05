@@ -1,22 +1,33 @@
-// Contient les informations pour compiler le projet
 {
   "compilerOptions": {
-    // Le dossier de sortie de nos fichier javascript
-    "outDir": "dist",
     // La version javascript qu'on cible
-    "target": "ES2015",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    // Pour utiliser les systeme de moule avec les import exports
+    "module": "ESNext",
+    // Va nous permettre d'utiliser des types de librairies qui sont déjà pre-inclus dans TS
+    "lib": ["ESNext", "DOM"],
+    // Pour utiliser l'option resolveJSONModule qui permet d'inclure les fichiers JSON avec le systeme d'import
+    "moduleResolution": "Node",
+    // Pour etre capable d'importer les fichier JSON
+    "resolveJsonModule": true,
+    "strict": true,
+    // Pour avoir les fichier MAP à fin de suivre les fichier
+    "sourceMap": true,
+    // On ecoute à chaque fois qu'il y a des modifications
+    // "watch": true,
     // Compile le code que si il n'y a pas d'erreur, ainsi ça nous permet de vous rassurer que le fichier JS compiler ou generer ne contient pas d'erreur
     "noEmitOnError": true,
-    // Permet de mettre en place une verification qui va etre beaucoup plus strict et qui va vous empecher de faire des betises, par exemple pour chaque argument ou variable on sera obliger de lui passer un type, verifier certaines choses avant de faire une affectation,...
-    "strict": true,
-    // On ecoute à chaque fois qu'il y a des modifications
-    "watch": true,
-    "noUncheckedIndexedAccess": true,
-    "declaration": true,
-    "declarationDir": "./src/types"
+    "isolatedModules": true,
+    // Pour utiliser aussi les modules commonJS
+    "esModuleInterop": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    // Pour eviter d'aller verifier les fichiers de typage des librairies
+    "skipLibCheck": true
   },
-  // Le fichier à inclure dans le  programme
-  "files": ["./src/06.declaration.ts"],
-  // Pour inclure les fichiers de declarations dans notre espace
-  "includes": "./src/types/**/*"
+  // Pour lui où on aller faire faire le type CHeck où va se trouver les fichiers typescript à compiler
+  "include": ["src"]
 }
